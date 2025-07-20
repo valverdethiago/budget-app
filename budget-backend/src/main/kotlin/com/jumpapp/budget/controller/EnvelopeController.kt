@@ -4,6 +4,7 @@ import com.jumpapp.budget.dto.AmountDto
 import com.jumpapp.budget.model.Envelope
 import com.jumpapp.budget.repository.EnvelopeRepository
 import org.slf4j.LoggerFactory
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 
+@CrossOrigin(origins = ["http://localhost:5173"])
 @RestController
 @RequestMapping("/api/envelopes")
 class EnvelopeController(
@@ -24,7 +26,7 @@ class EnvelopeController(
     @GetMapping
     fun listEnvelopes(): List<Envelope> = envelopeRepository.findAll()
     @GetMapping("/income")
-    fun getIncome(): BigDecimal = income
+    fun getIncome(): AmountDto = AmountDto(income)
     @PostMapping("/income")
     fun addIncome(@RequestBody dto: AmountDto) {
         logger.info("Received request to add income: $dto.value")
